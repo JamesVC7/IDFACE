@@ -25,9 +25,10 @@ class System(QWidget):
 
         # Tabla
         self.table_widget = QTableWidget()
-        self.table_widget.setColumnCount(5)
+        self.table_widget.setColumnCount(7)
 
-        column_names = ["ID", "Usuario","Nombre", "Correo", "Accion"]
+        column_names = ["ID", "Usuario","Nombre", "Correo", "N° Ingresos", "Último Ingreso", "Accion"]
+
         self.table_widget.setHorizontalHeaderLabels(column_names)
         self.table_widget.setStyleSheet("QHeaderView::section {background-color: black; color: white; }")
 
@@ -69,6 +70,7 @@ class System(QWidget):
             else:
                 return "Usuario"
 
+
     def obtener_datos_usuario(self):
         # Conectar a la base de datos MySQL
         conexion = mysql.connector.connect(
@@ -80,7 +82,13 @@ class System(QWidget):
         cursor = conexion.cursor()
 
         # Realizar una consulta para obtener los datos del usuario
-        cursor.execute("SELECT id_usuario, usuario, nombre, correo FROM login ")
+        cursor.execute("""
+                       SELECT l.id_usuario, l.usuario, l.nombre,  l.correo,l.numero_ingresos,
+                              MAX(h.fecha_ingreso) as ultimo_ingreso
+                       FROM login l
+                                LEFT JOIN historial_ingresos h ON l.id_usuario = h.id_usuario
+                       GROUP BY l.id_usuario, l.usuario, l.nombre, l.correo
+                       """)
         datos_usuario = cursor.fetchall()
 
         conexion.close()
@@ -91,20 +99,25 @@ class System(QWidget):
         self.table_widget.setRowCount(len(datos_usuario))
 
         # Llenar la tabla con los datos del usuario
-        for row, (id_detalle, usuario, nombre, correo) in enumerate(datos_usuario):
+        for row, (id_detalle, usuario, nombre, correo, num_ingresos, ultimo_ingreso) in enumerate(datos_usuario):
             item_id_detalle = QTableWidgetItem(str(id_detalle))  # Convertir a cadena
             item_usuario = QTableWidgetItem(usuario)
             item_nombre = QTableWidgetItem(nombre)
             item_correo= QTableWidgetItem(correo)
+            item_num_ingresos = QTableWidgetItem(str(num_ingresos))
+            item_ultimo_ingreso = QTableWidgetItem(str(ultimo_ingreso) if ultimo_ingreso else "Sin ingresos")
             self.table_widget.setItem(row, 0, item_id_detalle)
             self.table_widget.setItem(row, 1, item_usuario)
             self.table_widget.setItem(row, 2, item_nombre)
             self.table_widget.setItem(row, 3, item_correo)
+            self.table_widget.setItem(row, 4, item_num_ingresos)
+            self.table_widget.setItem(row, 5, item_ultimo_ingreso)
             # Agregar botón a la columna "ACCION"
             button_accion = QPushButton("Borrar")
             button_accion.setStyleSheet("background-color: red; color: #fff;")
-            self.table_widget.setCellWidget(row, 4, button_accion)
+            self.table_widget.setCellWidget(row, 6, button_accion)
             button_accion.clicked.connect(lambda _, r=row: self.eliminar_fila(r))
+
 
     def eliminar_fila(self, row):
         id_detalle = self.table_widget.item(row, 0).text()

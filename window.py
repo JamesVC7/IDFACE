@@ -155,12 +155,40 @@ class FaceRecognitionApp(QWidget):
         duration = 1000
         winsound.Beep(frequency, duration)
 
+    def registrar_ingreso(self, id_usuario):
+        conexion = mysql.connector.connect(
+            host="localhost",
+            user="root",
+            password="",
+            database="recface"
+        )
+        cursor = conexion.cursor()
+
+        # Insertar nuevo registro con la fecha actual (MySQL se encargará automáticamente)
+        cursor.execute("""
+                       INSERT INTO historial_ingresos (id_usuario, fecha_ingreso)
+                       VALUES (%s, CURRENT_TIMESTAMP)
+                       """, (id_usuario,))
+
+        # Actualizar el contador de ingresos en la tabla login
+        cursor.execute("""
+                       UPDATE login
+                       SET numero_ingresos = (SELECT COUNT(*)
+                                              FROM historial_ingresos
+                                              WHERE id_usuario = %s)
+                       WHERE id_usuario = %s
+                       """, (id_usuario, id_usuario))
+
+        conexion.commit()
+        conexion.close()
+
     def open_window(self):
         self.cap.release()
         self.timer.stop()
         self.hide()
         self.window_system = System()
         self.window_system.show()
+        self.registrar_ingreso(globals.global_id_usuario)
 
 if __name__ == '__main__':
     from dotenv import load_dotenv
