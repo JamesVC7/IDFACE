@@ -9,7 +9,7 @@ class Register(QWidget):
         super().__init__()
         self.setWindowTitle("Register")
         self.setFixedSize(500, 400)
-        self.setStyleSheet("background-color: #0a0a6f; color: white;")
+        self.setStyleSheet("background-color: #c1ccdc; color: white;")
         layout = QVBoxLayout()
         self.setLayout(layout)
 
@@ -39,7 +39,7 @@ class Register(QWidget):
 
         # Boton Registro Facial
         self.button_add_face = QPushButton("Registro Facial")
-        self.button_add_face.setStyleSheet("background: orange")
+        self.button_add_face.setStyleSheet("background-color: #410967")
         self.button_add_face.clicked.connect(self.registro_facial)
 
         # Boton Registro
@@ -49,7 +49,7 @@ class Register(QWidget):
 
         # Boton Actualizar
         self.button_update = QPushButton("Actualizar")
-        self.button_update.setStyleSheet("background: violet")
+        self.button_update.setStyleSheet("background-color: #12a3be")
         self.button_update.clicked.connect(self.actualizar)
 
         # Boton Volver
