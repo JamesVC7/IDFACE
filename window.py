@@ -164,7 +164,7 @@ class FaceRecognitionApp(QWidget):
         )
         cursor = conexion.cursor()
 
-        # Insertar nuevo registro con la fecha actual (MySQL se encargará automáticamente)
+        # Insertar nuevo registro con la fecha actual
         cursor.execute("""
                        INSERT INTO historial_ingresos (id_usuario, fecha_ingreso)
                        VALUES (%s, CURRENT_TIMESTAMP)
@@ -189,6 +189,9 @@ class FaceRecognitionApp(QWidget):
         self.window_system = System()
         self.window_system.show()
         self.registrar_ingreso(globals.global_id_usuario)
+        # Actualizar la tabla después de registrar el ingreso
+        datos_usuario = self.window_system.obtener_datos_usuario()
+        self.window_system.llenar_tabla(datos_usuario)
 
 if __name__ == '__main__':
     from dotenv import load_dotenv

@@ -9,33 +9,45 @@ class Register(QWidget):
         super().__init__()
         self.setWindowTitle("Register")
         self.setFixedSize(500, 400)
-        self.setStyleSheet("background-color: #c1ccdc; color: white;")
+        self.setStyleSheet("""
+            background: qlineargradient(
+                x1:0, y1:0, x2:0, y2:1,
+                stop:0 #090435,
+                stop:0.5 #2160a0,
+                stop:1 #090435
+            );
+            color: white;
+        """)
         layout = QVBoxLayout()
         self.setLayout(layout)
 
         label = QLabel(f"Registro")
-        label.setStyleSheet("font-size: 22px; font-weight: bold;")
+        label.setStyleSheet("font-size: 22px; font-weight: bold; background: transparent; ")
 
         self.usuario_input = QLineEdit()
         self.usuario_input.setPlaceholderText("Usuario")
         self.usuario_input.setStyleSheet("height: 30px; margin: 0 auto; padding: 2px 10px;"
-                                         "border: 2px solid green; border-radius: 10px;")
+                                         "border: 2px solid green; border-radius: 10px;"
+                                         "background: transparent; color: white;")
 
         self.password_input = QLineEdit()
         self.password_input.setPlaceholderText("Contraseña")
         self.password_input.setEchoMode(QLineEdit.Password)
         self.password_input.setStyleSheet("height: 30px; margin: 0 auto; padding: 2px 10px;"
-                                          "border: 2px solid green; border-radius: 10px;")
+                                          "border: 2px solid green; border-radius: 10px;"
+                                          "background: transparent; color: white;")
 
         self.nombre_input = QLineEdit()
         self.nombre_input.setPlaceholderText("Nombre")
         self.nombre_input.setStyleSheet("height: 30px; margin: 0 auto; padding: 2px 10px;"
-                                         "border: 2px solid green; border-radius: 10px;")
+                                         "border: 2px solid green; border-radius: 10px;"
+                                        " background: transparent; color: white;")
 
         self.correo_input = QLineEdit()
         self.correo_input.setPlaceholderText("Correo")
         self.correo_input.setStyleSheet("height: 30px; margin: 0 auto; padding: 2px 10px;"
-                                        "border: 2px solid green; border-radius: 10px;")
+                                        "border: 2px solid green; border-radius: 10px;"
+                                        "background: transparent; color: white;")
 
         # Boton Registro Facial
         self.button_add_face = QPushButton("Registro Facial")

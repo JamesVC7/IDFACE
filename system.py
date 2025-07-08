@@ -11,7 +11,15 @@ class System(QWidget):
         super().__init__()
         self.setWindowTitle("Welcome")
         self.setFixedSize(550, 400)
-        self.setStyleSheet("background-color: #0a0a6f; color: white;")
+        self.setStyleSheet("""
+                    background: qlineargradient(
+                        x1:0, y1:0, x2:0, y2:1,
+                        stop:0 #090435,
+                        stop:0.5 #2160a0,
+                        stop:1 #090435
+                    );
+                    color: white;
+                """)
 
         layout = QVBoxLayout()
         self.setLayout(layout)
@@ -20,7 +28,7 @@ class System(QWidget):
         nombre_usuario = self.obtener_nombre_usuario(globals.global_id_usuario)
 
         label = QLabel(f"Bienvenido {nombre_usuario}")
-        label.setStyleSheet("font-size: 22px; font-weight: bold;")
+        label.setStyleSheet("font-size: 22px; font-weight: bold; background: transparent")
         layout.addWidget(label)
 
         # Tabla
