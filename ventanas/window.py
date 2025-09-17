@@ -26,7 +26,7 @@ class FaceRecognitionApp(QWidget):
         print('imagePaths=', self.imagePaths)
 
         self.face_recognizer = cv2.face.LBPHFaceRecognizer_create()
-        self.face_recognizer.read('modeloLBPHFace.xml')
+        self.face_recognizer.read('modelos/modeloLBPHFace.xml')
 
         self.cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
         self.faceClassif = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
@@ -198,7 +198,7 @@ if __name__ == '__main__':
     load_dotenv()
 
     app = QApplication(sys.argv)
-    app.setWindowIcon(QIcon('iconoFace.jpg'))
+    app.setWindowIcon(QIcon('recursos/iconoFace.jpg'))
     face_recognition_app = FaceRecognitionApp()
     face_recognition_app.show()
     sys.exit(app.exec_())

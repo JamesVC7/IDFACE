@@ -20,7 +20,7 @@ class LoginWindow(QWidget):
         layout_usuario = QHBoxLayout(widget_usuario)
 
         imagen_usuario = QLabel()
-        pixmap_usuario = QPixmap('iconoFC.png').scaled(332, 332)
+        pixmap_usuario = QPixmap('recursos/iconoFC.png').scaled(332, 332)
         imagen_usuario.setPixmap(pixmap_usuario)
         imagen_usuario.setAlignment(Qt.AlignCenter)
 
@@ -119,7 +119,7 @@ class LoginWindow(QWidget):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    app.setWindowIcon(QIcon('iconoFace.jpg'))
+    app.setWindowIcon(QIcon('recursos/iconoFace.jpg'))
     login_window = LoginWindow()
     login_window.show()
     sys.exit(app.exec_())

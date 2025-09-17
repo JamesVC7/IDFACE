@@ -196,7 +196,7 @@ class System(QWidget):
         print("Entrenando...")
         face_recognizer.train(facesData, np.array(labels))
 
-        face_recognizer.write('modeloLBPHFace.xml')
+        face_recognizer.write('modelos/modeloLBPHFace.xml')
         print("Modelo almacenado...")
         QMessageBox.information(self, "Éxito", "Usuario eliminado y actualizado con éxito")
 

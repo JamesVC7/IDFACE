@@ -175,7 +175,7 @@ class Register(QWidget):
         print("Entrenando...")
         face_recognizer.train(facesData, np.array(labels))
 
-        face_recognizer.write('modeloLBPHFace.xml')
+        face_recognizer.write('modelos/modeloLBPHFace.xml')
         print("Modelo almacenado...")
         QMessageBox.information(self, "Éxito", "Modelo actualizado y almacenado con éxito")
 
